@@ -2,7 +2,7 @@ require 'test/test_helper'
 
 class TestLinkup < Test::Unit::TestCase
 
-  context "Tests from daringfireball" do
+  context "tests from daringfireball" do
 
     should "link plain url" do
       input = 'http://foo.com/blah_blah'
@@ -148,11 +148,30 @@ class TestLinkup < Test::Unit::TestCase
       assert_equal expected, input.linkup
     end
 
-    should "link urls inside xml tags" do
+    should "link urls inside existing xml tags" do
       input = "<tag>http://example.com</tag>"
       expected = '<tag><a href="http://example.com">http://example.com</a></tag>'
       assert_equal expected, input.linkup
     end
 
   end
+  
+  context "already-linked urls"
+    should "not re-link urls inside link tags" do
+      input = '<a href="http://example.com">http://example.com</tag>'
+      expected = '<a href="http://example.com">http://example.com</tag>'
+      assert_equal expected, input.linkup
+    end
+    should "not re-link urls inside link tags with surrounding text" do
+      input = '<a href="http://example.com">click http://example.com to go there</tag>'
+      expected = '<a href="http://example.com">click http://example.com to go there</tag>'
+      assert_equal expected, input.linkup
+    end
+    should "not re-link urls inside link tags, even with intervening tags" do
+      input = '<a href="http://example.com"><i>http://example.com</i></tag>'
+      expected = '<a href="http://example.com"><i>http://example.com</i></tag>'
+      assert_equal expected, input.linkup
+    end
+  end
+  
 end
