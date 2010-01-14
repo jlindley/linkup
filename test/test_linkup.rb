@@ -1,6 +1,6 @@
 require 'test/test_helper'
 
-class LinkupTest < Test::Unit::TestCase
+class TestLinkup < Test::Unit::TestCase
 
   context "Tests from daringfireball" do
 
