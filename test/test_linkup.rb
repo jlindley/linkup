@@ -156,7 +156,7 @@ class TestLinkup < Test::Unit::TestCase
 
   end
   
-  context "already-linked urls"
+  context "already-linked urls" do
     should "not re-link urls inside link tags" do
       input = '<a href="http://example.com">http://example.com</tag>'
       expected = '<a href="http://example.com">http://example.com</tag>'
