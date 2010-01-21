@@ -2,7 +2,7 @@ require 'test/test_helper'
 
 class TestLinkup < Test::Unit::TestCase
 
-  context "tests from daringfireball" do
+  context "from daringfireball" do
 
     should "link plain url" do
       input = 'http://foo.com/blah_blah'
@@ -88,9 +88,9 @@ class TestLinkup < Test::Unit::TestCase
       assert_equal expected, input.linkup
     end
 
-    should "link not link urls-like strings with only one slash" do
+    should "link link urls-like strings with only one slash" do
       input = 'rdar:/1234'
-      expected = 'rdar:/1234'
+      expected = '<a href="rdar:/1234">rdar:/1234</a>'
       assert_equal expected, input.linkup
     end
 
@@ -119,7 +119,7 @@ class TestLinkup < Test::Unit::TestCase
     end
 
     should "link urls with username and password and port" do
-      input = 'http://http://userid:password@example.com:8080'
+      input = 'http://userid:password@example.com:8080'
       expected = '<a href="http://userid:password@example.com:8080">http://userid:password@example.com:8080</a>'
       assert_equal expected, input.linkup
     end
@@ -158,18 +158,26 @@ class TestLinkup < Test::Unit::TestCase
   
   context "already-linked urls" do
     should "not re-link urls inside link tags" do
-      input = '<a href="http://example.com">http://example.com</tag>'
-      expected = '<a href="http://example.com">http://example.com</tag>'
+      input = '<a href="http://example.com">http://example.com</a>'
+      expected = '<a href="http://example.com">http://example.com</a>'
       assert_equal expected, input.linkup
     end
     should "not re-link urls inside link tags with surrounding text" do
-      input = '<a href="http://example.com">click http://example.com to go there</tag>'
-      expected = '<a href="http://example.com">click http://example.com to go there</tag>'
+      input = '<a href="http://example.com">click http://example.com to go there</a>'
+      expected = '<a href="http://example.com">click http://example.com to go there</a>'
       assert_equal expected, input.linkup
     end
     should "not re-link urls inside link tags, even with intervening tags" do
-      input = '<a href="http://example.com"><i>http://example.com</i></tag>'
-      expected = '<a href="http://example.com"><i>http://example.com</i></tag>'
+      input = '<a href="http://example.com"><i>http://example.com</i></a>'
+      expected = '<a href="http://example.com"><i>http://example.com</i></a>'
+      assert_equal expected, input.linkup
+    end
+  end
+
+  context "badly handled scenarios" do
+    should "but doesn't, link non-linked urls next to linked urls" do
+      input = '<a href="http://example.com"><i>http://example.com</i></a>, and also http://example.net/ too'
+      expected = '<a href="http://example.com"><i>http://example.com</i></a>, and also http://example.net/ too'
       assert_equal expected, input.linkup
     end
   end
