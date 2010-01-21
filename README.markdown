@@ -21,13 +21,21 @@ Usage
 
 The sane, non-object-space-polluting way:
 
-    Linkup.linkify("string with url http://example.com")
+    Linkup.linkify('string with url http://example.com')
+    #=> 'string with url <a href="http://example.com">http://example.com</a>'
 
-Or, include it in the string class To add a method called 'linkup' to every string object:
+Or, include it in the String class To add a method called 'linkup' to every string object:
 
     class String; include Linkup; end
     
-    "string with url http://example.com".linkup
+    'string with url http://example.com'.linkup
+    #=> 'string with url <a href="http://example.com">http://example.com</a>'
+
+As per the warning above, strings already containing href='s will not be re-linked:
+
+    s = '<a href="http://example.com">http://foo.com</a>, http://bar.net/'
+    Linkup.linkify(s)
+    #=> '<a href="http://example.com">http://foo.com</a>, http://bar.net/'
 
 Installation
 ---
