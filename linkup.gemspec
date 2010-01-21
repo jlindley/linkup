@@ -16,11 +16,14 @@ Gem::Specification.new do |s|
     "README.markdown"
   ]
   s.files = [
-    "README.markdown",
+    ".gitignore",
+     "README.markdown",
+     "Rakefile",
      "VERSION",
      "doc/ruby_regex.rb",
      "doc/sample_lines.txt",
      "lib/linkup.rb",
+     "linkup.gemspec",
      "test/test_helper.rb",
      "test/test_linkup.rb"
   ]
