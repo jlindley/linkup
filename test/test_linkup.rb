@@ -1,3 +1,6 @@
+#!ruby19
+# encoding: utf-8
+
 require 'test/test_helper'
 
 class TestLinkup < Test::Unit::TestCase
@@ -46,15 +49,15 @@ class TestLinkup < Test::Unit::TestCase
       assert_equal expected, input.linkup
     end
 
-    should "not link link-adjacent angle brackets" do
+    should_eventually "link urls surrounded by angle brackets" do
       input = '<http://foo.com/blah_blah>'
-      expected = '<<a href="http://foo.com/blah_blah">http://foo.com/blah_blah</a>>'
+      expected = '<a href="http://foo.com/blah_blah">http://foo.com/blah_blah</a>'
       assert_equal expected, input.linkup
     end
 
-    should "handle link-adjacent angle brackets with trailing slash" do
+    should_eventually "link urls surrounded by angle brackets with trailing slash" do
       input = '<http://foo.com/blah_blah/>'
-      expected = '<<a href="http://foo.com/blah_blah/">http://foo.com/blah_blah/</a>>'
+      expected = '<a href="http://foo.com/blah_blah/">http://foo.com/blah_blah/</a>'
       assert_equal expected, input.linkup
     end
 

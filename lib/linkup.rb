@@ -1,3 +1,5 @@
+#!ruby19
+# encoding: utf-8
 module Linkup
 
   # for inclusion in String class
@@ -13,7 +15,7 @@ module Linkup
 
     attr_accessor :original
 
-    LINK_REGEX =  /\b(([\w-]+:\/\/?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|\/)))/u
+    LINK_REGEX =  /\b(([\w-]+:\/\/?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s<]|\/)))/u
 
     def initialize(string)
       self.original = string
